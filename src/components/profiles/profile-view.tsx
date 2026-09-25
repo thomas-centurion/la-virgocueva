@@ -1,0 +1,22 @@
+import { Image } from 'expo-image';
+import type { ReactNode } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { colors } from '@/constants/theme';
+import { type Post, type User } from '@/features/mock-data';
+import type { FollowSummary } from '@/features/supabase-social';
+import { Avatar } from './avatar';
+import { PostCard } from '@/components/posts/post-card';
+import { ImageThumbnail } from '@/components/ui/image-viewer';
+
+export function ProfileView({ user, posts, isCurrent, headerAction, notice, onRetry, followSummary, followLoading, onToggleFollow }: { user: User; posts: Post[]; isCurrent?: boolean; headerAction?: ReactNode; notice?: string | null; onRetry?: () => void; followSummary?: FollowSummary; followLoading?: boolean; onToggleFollow?: () => void }) {
+  return <FlatList data={posts} keyExtractor={(post) => post.id} showsVerticalScrollIndicator={false} contentContainerStyle={styles.list} ListHeaderComponent={<>
+    <View style={styles.coverFrame}>{user.cover ? <Image source={{ uri: user.cover }} style={styles.cover} contentFit="cover"/> : <View style={styles.cover} />}</View>
+    <View style={styles.details}><View style={styles.avatarRow}><View>{user.avatar ? <ImageThumbnail uri={user.avatar} style={styles.avatarImage} imageStyle={styles.avatarImageContent} accessibilityLabel="Abrir foto de perfil" /> : <Avatar uri={null} size={82}/>}</View>{!isCurrent && followSummary && onToggleFollow && <Pressable accessibilityRole="button" disabled={followLoading} onPress={onToggleFollow} style={[styles.follow, followSummary.isFollowing && styles.following]}><Text style={styles.followText}>{followLoading ? 'Guardando…' : followSummary.isFollowing ? 'Siguiendo' : 'Seguir'}</Text></Pressable>}</View>
+      <View style={styles.nameRow}><View style={styles.nameBlock}>{user.name ? <Text style={styles.name}>{user.name}</Text> : null}{user.username ? <Text style={styles.handle}>@{user.username}</Text> : null}</View>{headerAction}</View>{user.bio ? <Text style={styles.bio}>{user.bio}</Text> : null}<Text style={styles.stats}><Text style={styles.bold}>{posts.length}</Text> publicaciones{followSummary ? <>   <Text style={styles.bold}>{followSummary.followers}</Text> seguidores   <Text style={styles.bold}>{followSummary.following}</Text> seguidos</> : null}</Text>
+      <View style={styles.section}><Text style={styles.sectionTitle}>Publicaciones</Text></View>
+      {notice ? <View style={styles.notice}><Text style={styles.noticeText}>{notice}</Text>{onRetry && <Pressable onPress={onRetry}><Text style={styles.retry}>Intentar de nuevo</Text></Pressable>}</View> : null}
+    </View>
+  </>} renderItem={({ item }) => <PostCard post={item} />} ListEmptyComponent={<Text style={styles.empty}>Todavía no hay publicaciones.</Text>}/>;
+}
+const styles = StyleSheet.create({ list: { paddingBottom: 28 }, coverFrame: { height: 166, width: '100%', backgroundColor: colors.surfaceRaised }, cover: { height: 166, width: '100%', backgroundColor: colors.surfaceRaised }, avatarImage: { width: 82, height: 82, borderRadius: 41, backgroundColor: '#252C34' }, avatarImageContent: { width: 82, height: 82, borderRadius: 41 }, details: { paddingHorizontal: 20 }, avatarRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: -39, marginBottom: 12 }, follow: { backgroundColor: colors.surfaceRaised, paddingHorizontal: 17, paddingVertical: 9, borderRadius: 24, borderColor: colors.border, borderWidth: 1 }, following: { backgroundColor: colors.surface, borderColor: colors.accent }, followText: { color: colors.text, fontWeight: '700' }, nameRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }, nameBlock: { flex: 1 }, name: { color: colors.text, fontSize: 22, fontWeight: '800' }, handle: { color: colors.muted, fontSize: 13, marginTop: 3 }, bio: { color: colors.text, lineHeight: 22, marginTop: 13, fontSize: 14 }, stats: { color: colors.muted, marginTop: 13, fontSize: 13 }, bold: { color: colors.text, fontWeight: '800' }, section: { borderBottomWidth: 1, borderBottomColor: colors.border, paddingTop: 23, paddingBottom: 13, marginTop: 8 }, sectionTitle: { color: colors.text, fontWeight: '700', fontSize: 15 }, notice: { paddingVertical: 14, gap: 8 }, noticeText: { color: '#FF8585', fontSize: 13, lineHeight: 19 }, retry: { color: colors.accent, fontWeight: '700', fontSize: 13 }, empty: { color: colors.muted, textAlign: 'center', padding: 30 } });
+
