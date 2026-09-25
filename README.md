@@ -1,45 +1,45 @@
 # VirgoCueva
 
-A private social network for friends, built from scratch with React Native, Expo, TypeScript and Supabase.
+Una red social privada para amigos, desarrollada desde cero con React Native, Expo, TypeScript y Supabase.
 
-VirgoCueva is a small social network designed around a private group of friends. It includes the core features of a social platform while experimenting with a more personal and customizable approach to profiles and interactions.
+VirgoCueva es una pequeña red social pensada para un grupo privado de amigos. Incluye las funciones principales de una plataforma social, con una identidad propia y espacio para futuras opciones de personalización.
 
-## ✨ Features
+## ✨ Funcionalidades
 
-- 🔐 Authentication with Supabase Auth
-- 👤 User profiles with avatar, cover, bio and username
-- ✏️ Profile editing
-- 📝 Text posts
-- 🖼️ Image posts
-- ❤️ Likes
+- 🔐 Autenticación con Supabase Auth
+- 👤 Perfiles de usuario con avatar, portada, biografía y nombre de usuario
+- ✏️ Edición de perfil
+- 📝 Publicaciones de texto
+- 🖼️ Publicaciones con imágenes
+- ❤️ Me gusta
 - 🔁 Revirgs
-- 👥 Follow system
-- 💬 Comments and threaded replies
-- 📷 Images in comments and replies
-- 🔔 Notifications
-- 🔎 User search
-- 🖼️ Fullscreen image viewer
-- 🕐 Relative timestamps
-- 🌙 Dark UI
-- 📱 Persistent authentication session
+- 👥 Sistema de seguimiento
+- 💬 Comentarios y respuestas anidadas
+- 📷 Imágenes en comentarios y respuestas
+- 🔔 Notificaciones
+- 🔎 Búsqueda de usuarios
+- 🖼️ Visor de imágenes a pantalla completa
+- 🕐 Fechas relativas
+- 🌙 Interfaz oscura
+- 📱 Persistencia de la sesión de autenticación
 
-## 🛠️ Tech Stack
+## 🛠️ Tecnologías
 
 - **React Native**
 - **Expo SDK 57**
 - **TypeScript**
 - **Expo Router**
 - **Supabase**
-  - Authentication
+  - Autenticación
   - PostgreSQL
   - Storage
   - Row Level Security
-- **Expo SQLite** for auth session persistence
-- **Expo Image Picker** for image selection
+- **Expo SQLite** para la persistencia de la sesión
+- **Expo Image Picker** para seleccionar imágenes
 
-## 🏗️ Architecture
+## 🏗️ Arquitectura
 
-The application is built around React Native and Expo, with Supabase providing the backend infrastructure.
+La aplicación está construida sobre React Native y Expo, utilizando Supabase como infraestructura de backend.
 
 ```text
 ┌──────────────────────────────┐
@@ -47,8 +47,8 @@ The application is built around React Native and Expo, with Supabase providing t
 │                              │
 │        Expo Router           │
 │                              │
-│  Home · Search · Create      │
-│  Notifications · Profile    │
+│  Inicio · Buscar · Publicar  │
+│  Notificaciones · Perfil     │
 └──────────────┬───────────────┘
                │
                ▼
@@ -62,9 +62,9 @@ The application is built around React Native and Expo, with Supabase providing t
 └──────────────────────────────┘
 ```
 
-The mobile client uses a single Supabase client and keeps authentication state locally using Expo SQLite.
+El cliente móvil utiliza una única instancia de Supabase y mantiene el estado de autenticación localmente mediante Expo SQLite.
 
-## 📁 Project Structure
+## 📁 Estructura del proyecto
 
 ```text
 src/
@@ -96,25 +96,25 @@ supabase/
 └── migrations/
 ```
 
-## 🔐 Security
+## 🔐 Seguridad
 
-VirgoCueva uses Supabase Row Level Security to restrict access to user-owned data.
+VirgoCueva utiliza Row Level Security de Supabase para restringir el acceso y las modificaciones sobre los datos de los usuarios.
 
-Examples include:
+Algunos ejemplos:
 
-- Users can only modify their own profile.
-- Users can only create, edit and delete their own posts and comments.
-- Likes and Revirgs are tied to the authenticated user.
-- Follow relationships can only be created or removed by the follower.
-- Notifications are generated server-side and cannot be created directly by the mobile client.
-- Storage writes are restricted to the authenticated user's folder.
-- Private images are served through temporary signed URLs.
+- Los usuarios solo pueden modificar su propio perfil.
+- Los usuarios solo pueden crear, editar y eliminar sus propias publicaciones y comentarios.
+- Los Me gusta y Revirgs están asociados al usuario autenticado.
+- Las relaciones de seguimiento solo pueden ser creadas o eliminadas por quien sigue.
+- Las notificaciones se generan desde el servidor y no pueden ser creadas directamente desde el cliente móvil.
+- Las escrituras en Storage están restringidas a la carpeta del usuario autenticado.
+- Las imágenes privadas se sirven mediante URLs firmadas temporales.
 
-The mobile application never uses a Supabase `service_role` key.
+La aplicación móvil nunca utiliza una clave `service_role` de Supabase.
 
-## 🗄️ Database
+## 🗄️ Base de datos
 
-The current database includes:
+La base de datos actual incluye:
 
 - `profiles`
 - `posts`
@@ -124,7 +124,7 @@ The current database includes:
 - `follows`
 - `notifications`
 
-Database changes are tracked through SQL migrations in:
+Los cambios de la base de datos se gestionan mediante migraciones SQL ubicadas en:
 
 ```text
 supabase/migrations/
@@ -132,83 +132,83 @@ supabase/migrations/
 
 ## 🖼️ Storage
 
-Private Supabase Storage buckets are used for:
+Se utilizan buckets privados de Supabase Storage para:
 
-- avatars
-- covers
-- post images
-- comment images
+- avatares
+- portadas
+- imágenes de publicaciones
+- imágenes de comentarios
 
-Images are stored under user-specific paths and resolved through signed URLs.
+Las imágenes se almacenan dentro de rutas específicas por usuario y se obtienen mediante URLs firmadas.
 
-## 🚀 Getting Started
+## 🚀 Cómo ejecutar el proyecto
 
-### Requirements
+### Requisitos
 
 - Node.js
 - npm
-- Android Studio / Android SDK for Android development
-- Expo development environment
+- Android Studio / Android SDK para desarrollo en Android
+- Entorno de desarrollo de Expo
 
-### Installation
+### Instalación
 
-Clone the repository:
+Clonar el repositorio:
 
 ```bash
-git clone <your-repository-url>
+git clone <url-de-tu-repositorio>
 cd virgocueva
 ```
 
-Install dependencies:
+Instalar las dependencias:
 
 ```bash
 npm install
 ```
 
-Create a local environment file:
+Crear el archivo de variables de entorno local:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Add your Supabase project credentials:
+Agregar las credenciales de Supabase:
 
 ```env
-EXPO_PUBLIC_SUPABASE_URL=your_supabase_url
-EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+EXPO_PUBLIC_SUPABASE_URL=tu_supabase_url
+EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=tu_supabase_publishable_key
 ```
 
-Never use a Supabase `service_role` key in the mobile application.
+Nunca utilizar una clave `service_role` de Supabase dentro de la aplicación móvil.
 
-### Run the project
+### Ejecutar el proyecto
 
-Start the Expo development server:
+Iniciar el servidor de desarrollo de Expo:
 
 ```bash
 npx expo start --dev-client
 ```
 
-For Android:
+Para Android:
 
 ```bash
 npx expo run:android
 ```
 
-## 🧪 Validation
+## 🧪 Validación
 
-The project can be type-checked with:
+Para comprobar los tipos de TypeScript:
 
 ```bash
 npx tsc --noEmit
 ```
 
-Android export:
+Para generar el export de Android:
 
 ```bash
 npx expo export --platform android
 ```
 
-## 📱 Current Navigation
+## 📱 Navegación actual
 
 ```text
 Inicio
@@ -220,21 +220,21 @@ Perfil
 
 ## 🗺️ Roadmap
 
-Some ideas being considered for future versions:
+Algunas ideas consideradas para futuras versiones:
 
-- 🎵 Spotify integration and "Now Playing"
-- 🎨 More customizable user profiles
-- 🟢 Custom activity/status
-- 🎨 Daily random drawing
-- 😂 Meme creation tools
-- 💬 Profile guestbooks
-- 🎮 Small social games
-- 🖼️ Community albums and travel content
-- 🔗 Custom profile links
-- 🎛️ Profile widgets
+- 🎵 Integración con Spotify y "Now Playing"
+- 🎨 Perfiles más personalizables
+- 🟢 Estado o actividad personalizada
+- 🎨 Dibujo aleatorio diario
+- 😂 Herramientas para crear memes
+- 💬 Libros de visitas en los perfiles
+- 🎮 Pequeños juegos sociales
+- 🖼️ Álbumes comunitarios y contenido de viajes
+- 🔗 Enlaces personalizados en los perfiles
+- 🎛️ Widgets para los perfiles
 
-These features are ideas for future development and are not part of the current release.
+Estas funcionalidades son ideas para futuras versiones y no forman parte de la versión actual.
 
-## 📄 License
+## 📄 Licencia
 
-This project is currently a personal portfolio project.
+Actualmente, este proyecto es un proyecto personal para portfolio.
